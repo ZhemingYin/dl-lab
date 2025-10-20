@@ -1,0 +1,13 @@
+#!/bin/bash -l
+
+# Slurm parameters
+#SBATCH --job-name=team06
+#SBATCH --output=job_name-%j.%N.out
+#SBATCH --time=1-00:00:00
+#SBATCH --gpus=1
+
+# Activate everything you need
+module load cuda/11.2
+export WANDB_API_KEY=13e00845eff410a8834dd4c8f1650c4d23a469f2
+# Run your python code
+python3 main.py

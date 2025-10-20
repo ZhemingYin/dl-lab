@@ -1,0 +1,79 @@
+# Macros
+# ==============================================================================
+WINDOW_SIZE = 250
+NAME = "HAPT"
+LABEL_TYPE = "s2s"
+# Only for HAR dataset
+MULTIPLE = False
+CHANNELS = 6
+
+# Input pipeline
+# ==============================================================================
+read_files.multiple = %MULTIPLE
+load.data_dir = '/home/data/HAPT_dataset'
+# load.data_dir = '/home/data/realworld2016_dataset'
+load.name = %NAME
+load.position = None  # set to None for HAPT
+load.label_type = %LABEL_TYPE
+window_sliding.window_size = %WINDOW_SIZE
+window_sliding.shift_ratio = 0.5
+
+# Evaluate
+# ==============================================================================
+evaluate.label_type = %LABEL_TYPE
+evaluate.name = %NAME
+
+# Layers
+# ==============================================================================
+output_block.dense_units = 16
+lstm_dropout.return_sequences = True
+lstm_dropout.stateful = False
+gru_dropout.return_sequences = True
+gru_dropout.stateful = False
+brnn_dropout.return_sequences = True
+brnn_dropout.stateful = False
+
+# Architectures
+# ==============================================================================
+RNN.input_shape = (%WINDOW_SIZE, %CHANNELS)
+RNN.neuron_num = 64
+RNN.number_of_layer = 2
+RNN.dropout_rate = 0.3
+RNN.name = %NAME
+RNN.label_type = %LABEL_TYPE
+
+GRU.input_shape = (%WINDOW_SIZE, %CHANNELS)
+GRU.neuron_num = 128
+GRU.number_of_layer = 1
+GRU.dropout_rate = 0.1
+GRU.name = %NAME
+GRU.label_type = %LABEL_TYPE
+
+BRNN.input_shape = (%WINDOW_SIZE, %CHANNELS)
+BRNN.neuron_num = 128
+BRNN.number_of_layer = 1
+BRNN.dropout_rate = 0.1
+BRNN.name = %NAME
+BRNN.label_type = %LABEL_TYPE
+
+CNN_RNN.input_shape = (16, 250, 6)
+CNN_RNN.cnn_neuron_list = [32]
+CNN_RNN.cnn_number_of_layer = [1]
+CNN_RNN.rnn_neuron_list = [128]
+CNN_RNN.rnn_number_of_layer = [1]
+CNN_RNN.dropout_rate = 0.3
+CNN_RNN.kernel_size = 3
+CNN_RNN.pool_size = 2
+
+RNN_CNN.input_shape = (250, 6)
+RNN_CNN.cnn_neuron_list = [32]
+RNN_CNN.cnn_number_of_layer = [1]
+RNN_CNN.rnn_neuron_list = [128]
+RNN_CNN.rnn_number_of_layer = [1]
+RNN_CNN.dropout_rate = 0.3
+RNN_CNN.kernel_size = 3
+RNN_CNN.pool_size = 2
+
+# Training
+# ==============================================================================
+Trainer.learning_rate = 1e-5

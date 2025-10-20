@@ -1,0 +1,67 @@
+# Macros
+# ==============================================================================
+CLASSIFICATION = "binary"
+
+
+# Training
+# ==============================================================================
+Trainer.total_steps = 1e5
+Trainer.log_interval = 1
+Trainer.ckpt_interval = 1
+Trainer.learning_rate = 0.00005
+Trainer.classification = %CLASSIFICATION
+
+# Input pipeline
+# ==============================================================================
+load.name = 'IDRID'
+load.data_dir = '/home/data/IDRID_dataset'
+load.classification = %CLASSIFICATION
+prepare.buffer_size = 256
+prepare.batch_size = 32
+deep_visualize.batch_size = 32
+prepare.caching = False
+# load.name = 'eyepacs'
+# load.data_dir = '/home/data/tensorflow_datasets'
+
+# Evaluation
+# ==============================================================================
+evaluate.path = "/home/RUS_CIP/st174258/dl-lab-22w-team06"
+evaluate.classification = %CLASSIFICATION
+
+# Layers
+# ==============================================================================
+output_block.dense_units = 16
+output_block.dropout_rate = 0.3
+
+# Architecture
+# ==============================================================================
+CNN.neuron_list = [4, 8, 16, 32]
+CNN.number_of_layer = [1, 1, 1, 1]
+CNN.kernel_size = 3
+CNN.stride = 1
+CNN.pool_size = 2
+CNN.img_size = (256, 256, 3)
+CNN.classification = %CLASSIFICATION
+
+VGG.img_size = (256, 256, 3)
+VGG.neuron_list = [64, 128, 256, 512]
+VGG.number_of_layer = [3, 3, 3, 3]
+VGG.dropout_rate = 0.3
+VGG.kernel_size = 3
+VGG.pool_size = 2
+VGG.classification = %CLASSIFICATION
+
+ResNet101.img_size = (256, 256, 3)
+ResNet101.bottleneck_list = [3, 4, 23, 3]
+ResNet101.neurons = 64
+ResNet101.classification = %CLASSIFICATION
+
+# Transfer learning
+# ==============================================================================
+inception_resnet_v2.fine_tune_at = 100
+inception_resnet_v2.img_size = (256, 256, 3)
+inception_resnet_v2.classification = %CLASSIFICATION
+
+mobilenet.fine_tune_at = 100
+mobilenet.img_size = (256, 256, 3)
+mobilenet.classification = %CLASSIFICATION
